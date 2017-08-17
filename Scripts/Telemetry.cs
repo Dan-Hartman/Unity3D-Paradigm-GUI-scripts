@@ -10,6 +10,11 @@ public class Telemetry : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		InvokeRepeating ("updateJson", 0.5f, 0.5f);
+	}
+
+	void updateJson()
+	{
 		Debug.Log (dataInstance.velocity_x);
 		WWW www = new WWW (url);
 		StartCoroutine (WaitForRequest (www));
