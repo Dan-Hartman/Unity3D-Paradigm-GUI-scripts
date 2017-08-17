@@ -1,31 +1,43 @@
-#pragma strict
-// Get the latest pod telemetry data from localhost:7777/state
-public var url: String = "http://localhost:7777/state";
-public var json: String;
-public var velocity: int;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-function Start () {
-	var wwwInitial: WWW = new WWW(url);
-    var renderer: Renderer = GetComponent.<Renderer>();
-    if (wwwInitial.isDone) {
-    	json = wwwInitial.text;
-    	Debug.Log("Data retrieved: " + json);
-	   	InvokeRepeating("updateJson", 0.01, 2.0);
-    }
-}
+public class Telemetry : MonoBehaviour {
+	string jsonString;
+	string url = "http://localhost:7777/state";
+	TelemetryData dataInstance = new TelemetryData();
 
-function updateJson() {
-	var wwwUpdated: WWW = new WWW(url);
-	if (wwwUpdated.isDone) {
-		json = wwwUpdated.text;
-		Debug.Log("Data updated to: " + json);
+	// Use this for initialization
+	void Start () 
+	{
+		Debug.Log (dataInstance.velocity_x);
+		WWW www = new WWW (url);
+		StartCoroutine (WaitForRequest (www));
+	}
+
+	IEnumerator WaitForRequest(WWW www) {
+		yield return www;
+		Debug.Log ("Data Retrieved: " + www.text);
+		jsonString = www.text;
+		deserialize();
+	}
+
+	void deserialize() 
+	{
+		JsonUtility.FromJsonOverwrite (jsonString, dataInstance);
+		Debug.Log (dataInstance.velocity_x);
+	}
+
+	// Update is called once per frame
+	void Update () {
+		foreach (Transform child in transform) {
+			child.position -= Vector3.forward * (dataInstance.velocity_x / 140);
+		}
 	}
 }
 
-function Update () {
-	for (var child : Transform in transform) {
-		if (child.position.z > 90) {
-	    child.position -= Vector3.forward * velocity / 140;
-	    }
-	}
+[System.Serializable]
+public class TelemetryData 
+{
+	public int velocity_x;
 }
