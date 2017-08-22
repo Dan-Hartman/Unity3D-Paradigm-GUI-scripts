@@ -4,12 +4,12 @@ var firstPersonCamera: Camera;
 var overheadCamera: Camera;
 
 function Start() {
-    firstPersonCamera.enabled = false;
-    overheadCamera.enabled = true;
+	firstPersonCamera.enabled = false;
+	overheadCamera.enabled = true;
 }
 
 function Update() {
-    if (Input.GetKeyDown("1")) {
+	if (Input.GetKeyDown("1")) {
         ShowFirstPersonView();
     }
     if (Input.GetKeyDown("2")) {
