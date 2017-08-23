@@ -10,12 +10,13 @@ public class TelemetryData {
 	public float velocity_x;
 	public float acceleration_x;
 	public float hp_pressure;
+	public long timestamp;
 }
 
 public class Telemetry : MonoBehaviour {
 	string jsonString;
 	string url = "http://localhost:7777/state";
-	TelemetryData dataInstance = new TelemetryData();
+	public static TelemetryData dataInstance = new TelemetryData();
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +38,7 @@ public class Telemetry : MonoBehaviour {
 
 	void deserialize() {
 		JsonUtility.FromJsonOverwrite (jsonString, dataInstance);
-		Debug.Log (dataInstance.velocity_x);
+		Debug.Log (dataInstance.timestamp);
 	}
 
 	// Update is called once per frame

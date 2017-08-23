@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class DataHP {
 	public Text hp;
 	public float highPressure;
@@ -16,15 +15,13 @@ public class UpdateHP : MonoBehaviour {
 	void Start () {
 		GameObject thePod = GameObject.Find ("Pod");
 		dataToUpdate.hp = GetComponent<Text> ();
-		TelemetryData telemData = thePod.GetComponent<TelemetryData> ();
-		dataToUpdate.highPressure = telemData.hp_pressure;
+		dataToUpdate.highPressure = Telemetry.dataInstance.hp_pressure;
 		InvokeRepeating ("updateData", 1f, 0.3f);
 	}
 
 	void updateData() {
 		GameObject thePod = GameObject.Find ("Pod");
-		TelemetryData telemData = thePod.GetComponent<TelemetryData> ();
-		dataToUpdate.highPressure = telemData.hp_pressure;
+		dataToUpdate.highPressure = Telemetry.dataInstance.hp_pressure;
 		Debug.Log ("HP: " + dataToUpdate.highPressure);
 	}
 

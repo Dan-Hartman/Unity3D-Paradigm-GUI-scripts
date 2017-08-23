@@ -3,28 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class Data {
+public class DataVel {
 	public Text velo;
 	public float velocity;
 }
 
 public class UpdateVelocity : MonoBehaviour {
-	Data dataToUpdate = new Data(); 
+	DataVel dataToUpdate = new DataVel(); 
 
 	// Use this for initialization
 	void Start () {
 		GameObject thePod = GameObject.Find ("Pod");
 		dataToUpdate.velo = GetComponent<Text> ();
-		TelemetryData telemData = thePod.GetComponent<TelemetryData> ();
-		dataToUpdate.velocity = telemData.velocity_x;
+		dataToUpdate.velocity = Telemetry.dataInstance.timestamp;
 		InvokeRepeating ("updateData", 1f, 0.3f);
 	}
 
 	void updateData() {
 		GameObject thePod = GameObject.Find ("Pod");
-		TelemetryData telemData = thePod.GetComponent<TelemetryData> ();
-		dataToUpdate.velocity = telemData.velocity_x;
+		dataToUpdate.velocity = Telemetry.dataInstance.timestamp ;
 		Debug.Log ("Velocity: " + dataToUpdate.velocity);
 	}
 
