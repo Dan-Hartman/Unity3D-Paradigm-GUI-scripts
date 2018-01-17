@@ -14,7 +14,7 @@ function Start() {
 
 // Called every frame.
 function Update() {
-	if (Input.GetKeyDown("1")) {
+    if (Input.GetKeyDown("1")) {
         ShowFirstPersonView();
     }
     if (Input.GetKeyDown("2")) {
